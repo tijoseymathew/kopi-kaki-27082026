@@ -1,0 +1,35 @@
+{
+  "name": "Kopi Kaki",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/va-h/devcontainers-features/uv:1": { "version": "latest" }
+  },
+  "postCreateCommand": "chmod +x bin/stall",
+  // `stall chat` serves the counter here. It opens the forwarded URL
+  // itself, so this only has to name the port and stay out of the way:
+  // "notify" leaves a toast to click if the tab did not open.
+  "forwardPorts": [7788],
+  "portsAttributes": {
+    "7788": { "label": "stall chat", "onAutoForward": "notify" }
+  },
+  "remoteEnv": {
+    "PATH": "${containerWorkspaceFolder}/bin:${containerEnv:PATH}",
+    "PYTHONPATH": "${containerWorkspaceFolder}",
+    "LLM_BASE_URL": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "LLM_MODEL": "gemini-3.1-flash-lite",
+    "STALL_URL": "https://kopi-kaki.tijm.dev",
+    "EMBEDDING_BASE_URL": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "EMBEDDING_MODEL": "gemini-embedding-001"
+  },
+  "secrets": {
+    "LLM_API_KEY": {
+      "description": "Your own LLM API key (see the pre-workshop email). Used for local runs only."
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python"],
+      "settings": { "terminal.integrated.cwd": "${containerWorkspaceFolder}" }
+    }
+  }
+}

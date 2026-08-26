@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Run the stall CLI from anywhere; the package lives next to this script.
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PYTHONPATH="$REPO${PYTHONPATH:+:$PYTHONPATH}" exec python3 -m stall "$@"
