@@ -41,3 +41,27 @@ mentions the words this customer actually used.
 Now the descriptive orders land too — "coffee with evaporated milk,
 less sweet" has an exact name in the book, and the book, not the
 model's memory of the internet, is what your agent should trust.
+
+## Hint: Gemini embeddings for RAG
+
+Doing [retrieval-augmented generation](https://en.wikipedia.org/wiki/Retrieval-augmented_generation)
+over the menu or promotions markdown? Use the same `litellm` client you
+already use for chat, just pointed at `config["embedding_base_url"]`,
+`config["embedding_api_key"]`, and `config["embedding_model"]` instead
+of the `llm_*` ones:
+
+```python
+litellm.embedding(
+    model=f"openai/{config['embedding_model']}",
+    input=texts,
+    api_base=config["embedding_base_url"],
+    api_key=config["embedding_api_key"],
+)
+```
+
+`embedding_base_url`/`embedding_api_key` are the stall's own metering
+endpoint, not Google's — the `openai/` prefix just tells litellm to
+treat it as a plain OpenAI-compatible target. `embedding_model` is
+whichever Gemini embedding model (e.g. `gemini-embedding-001`) the stall
+has wired up server-side; set it explicitly, since the proxy only fills
+it in when one is configured upstream.

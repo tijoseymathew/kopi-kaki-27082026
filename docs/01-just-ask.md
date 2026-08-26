@@ -20,9 +20,11 @@ good again.
 ## The capability
 
 Make the agent listen. One HTTP call per turn to an OpenAI-compatible
-endpoint — `POST {llm_base_url}/chat/completions`, no vendor SDK and no
-agent framework — carrying the conversation so far and instructions to
-do two things at once:
+endpoint — `POST {config["llm_base_url"]}/chat/completions`, with
+`config["llm_model"]` in the request body and
+`Authorization: Bearer {config["llm_api_key"]}` in the header — no
+vendor SDK and no agent framework — carrying the conversation so far
+and instructions to do two things at once:
 
 1. **Say something back.** One short sentence. On a single-turn customer
    a clarifying question *is* a lost sale — they are already gone.

@@ -37,7 +37,7 @@ it everything still works on the standard library.
 | `LLM_BASE_URL` | OpenAI-compatible endpoint (default: the recommended provider from the pre-workshop email) |
 | `LLM_MODEL` | model for local runs (graded runs use the stall's model — it is on the projector) |
 | `STALL_URL` | the stall's address (the instructor will give you this) |
-| `EMBEDDING_BASE_URL` | optional, for local embedding calls (e.g. dense retrieval) — see the Gemini embeddings hint below |
+| `EMBEDDING_BASE_URL` | optional, for local embedding calls (e.g. dense retrieval) — see `docs/02-ground-it.md` |
 | `EMBEDDING_MODEL` | optional, the embedding model to request; unset means embedding calls 502 locally |
 
 Verify your key works:
@@ -158,29 +158,6 @@ punctuation, and word order never cost you a sale. The wrong drink does.
 `config` hands you: `llm_base_url`, `llm_model`, `llm_api_key`,
 `embedding_base_url`, `embedding_api_key`, `embedding_model`,
 `stock_url`, `memory_dir`, `customer_id`.
-
-## Hint: Gemini embeddings for RAG
-
-Doing [retrieval-augmented generation](https://en.wikipedia.org/wiki/Retrieval-augmented_generation)
-over the menu or promotions markdown? Use the same `litellm` client you
-already use for chat, just pointed at the `embedding_*` keys instead of
-the `llm_*` ones:
-
-```python
-litellm.embedding(
-    model=f"openai/{config['embedding_model']}",
-    input=texts,
-    api_base=config["embedding_base_url"],
-    api_key=config["embedding_api_key"],
-)
-```
-
-`embedding_base_url`/`embedding_api_key` are the stall's own metering
-endpoint, not Google's — the `openai/` prefix just tells litellm to
-treat it as a plain OpenAI-compatible target. `embedding_model` is
-whichever Gemini embedding model (e.g. `gemini-embedding-001`) the stall
-has wired up server-side; set it explicitly, since the proxy only fills
-it in when one is configured upstream.
 
 ## Scoring
 
