@@ -168,3 +168,12 @@ as tiebreaker. Best run counts.
 
 Level briefs are in `docs/` — all five, from the start. Reading ahead is
 allowed and always has been.
+
+## Troubleshooting
+
+1. RESOURCE_EXHAUSTED error while the agent is coding
+- This means the model you've selected has reached one of its rate limits (for example, Tokens Per Minute). Below the chat interface, set the model beside the `Agent` icon to `Auto`.
+
+2. My order is not taken in `stall chat`
+- Make sure that LLM_API_KEY is set. You can run `echo $LLM_API_KEY` to check if it's set correctly.
+- To help you debug what's going on, click the `See Inside` button at the bottom of each reply from the agent on the `stall chat` web chat interface.
